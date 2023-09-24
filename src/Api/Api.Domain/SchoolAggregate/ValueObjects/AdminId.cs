@@ -14,12 +14,9 @@ public class AdminId : UserId
     }
 
     protected override string Prefix => _prefix;
-    public static new AdminId? Create(string value)
+    public static new AdminId Create(string value)
     {
         var (year, code, salt) = Decrypt(value, _prefix);
-        if (year == 0)
-            return null;
-
         return new(code, year, salt);
     }
 

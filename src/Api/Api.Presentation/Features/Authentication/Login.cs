@@ -1,7 +1,7 @@
 ﻿using Api.Application.Authentication.Login;
 using Carter;
 
-namespace Api.Presentation.Endpoints.Authentication;
+namespace Api.Presentation.Features.Authentication;
 
 public class Login : ICarterModule
 {

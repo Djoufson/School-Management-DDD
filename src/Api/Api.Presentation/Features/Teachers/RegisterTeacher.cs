@@ -3,7 +3,7 @@ using Api.Domain.Common.Utilities;
 using Api.Presentation.Utilities;
 using Carter;
 
-namespace Api.Presentation.Endpoints.Teachers;
+namespace Api.Presentation.Features.Teachers;
 
 public class RegisterTeacher : ICarterModule
 {

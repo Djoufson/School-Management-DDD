@@ -1,7 +1,7 @@
 ﻿using Api.Application.UsersManagement.GetUsers;
 using Carter;
 
-namespace Api.Presentation.Endpoints.Users;
+namespace Api.Presentation.Features.Users;
 
 public class GetUsers : ICarterModule
 {

@@ -1,7 +1,6 @@
 using Api.Application;
 using Api.Infrastructure;
 using Api.Presentation;
-using Api.Presentation.Middlewares;
 using Carter;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +10,6 @@ builder.Services
     .AddApplicationLayer()
     .AddInfrastructureLayer(builder.Configuration)
     .AddCarter();
-    // .AddFastEndpoints();
 
 var app = builder.Build();
 
@@ -23,16 +21,6 @@ if (app.Environment.IsDevelopment())
     await app.SeedDataAsync();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.UseMiddleware<RegisterUserIdMiddleware>();
-
-app.MapCarter();
-
-// app.UseFastEndpoints();
-
-//app.MapControllers();
+app.ConfigurePipeline();
 
 await app.RunAsync();

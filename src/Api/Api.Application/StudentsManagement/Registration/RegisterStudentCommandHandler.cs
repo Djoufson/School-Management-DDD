@@ -1,5 +1,5 @@
-﻿using Api.Application.Authentication.Errors;
-using Api.Application.Common;
+﻿using Api.Application.Common;
+using Api.Application.Common.Errors;
 using Api.Application.Repositories;
 using Api.Domain.Common.ValueObjects;
 using Api.Domain.SchoolAggregate.Entities;

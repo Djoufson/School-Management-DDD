@@ -8,9 +8,9 @@ public abstract class ValueObject : IEquatable<ValueObject>
 
     public abstract IEnumerable<object> GetEqualityComparer();
 
-    public static bool operator ==(ValueObject self, ValueObject other)
+    public static bool operator ==(ValueObject self, ValueObject? other)
     {
-        if (self is null)
+        if(other is null)
             return false;
 
         return self.Equals(other);

@@ -21,7 +21,7 @@ public class TeacherAdvisor : User
     {
     }
 
-    public bool AssignClass(SchoolClass @class)
+    internal bool AssignClass(SchoolClass @class)
     {
         // Validation checks
         _classes.Add(@class);
@@ -29,7 +29,7 @@ public class TeacherAdvisor : User
         return true;
     }
 
-    public bool UnAssignClass(SchoolClass @class)
+    internal bool UnAssignClass(SchoolClass @class)
     {
         // Verification checks
         _classes.Remove(@class);

@@ -1,4 +1,4 @@
-﻿namespace Api.Application.Authentication.Errors;
+﻿namespace Api.Application.Common.Errors;
 
 public class UserNotFoundError : IError
 {

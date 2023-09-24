@@ -1,15 +1,15 @@
-﻿
-using Api.Application.Common;
+﻿using Api.Application.Common;
 using Api.Domain.Common.ValueObjects;
 using Api.Domain.SchoolAggregate.Entities;
 using Api.Infrastructure.Persistance;
 using Api.Presentation.Middlewares;
+using Carter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 namespace Api.Presentation;
 
-public static class DependencyInjection
+public static class Startup
 {
     public static IServiceCollection AddPresentation(this IServiceCollection services)
     {
@@ -42,6 +42,19 @@ public static class DependencyInjection
             await context.Admins.AddAsync(admin);
             await unitOfWork.SaveChangesAsync();
         }
+
+        return app;
+    }
+
+    public static WebApplication ConfigurePipeline(this WebApplication app)
+    {
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.UseMiddleware<RegisterUserIdMiddleware>();
+
+        app.MapCarter();
 
         return app;
     }

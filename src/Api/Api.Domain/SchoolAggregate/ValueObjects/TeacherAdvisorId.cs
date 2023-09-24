@@ -25,12 +25,9 @@ public class TeacherAdvisorId : UserId
     }
 
     // The overload used to convert back values received from the database to the actual strongly typed Id
-    public static new TeacherAdvisorId? Create(string value)
+    public static new TeacherAdvisorId Create(string value)
     {
         var (year, code, salt) = Decrypt(value, _prefix);
-        if (year == 0 || salt == 0)
-            return null;
-
         return new(code, year, salt);
     }
 

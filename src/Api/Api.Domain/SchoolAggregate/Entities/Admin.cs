@@ -7,7 +7,7 @@ namespace Api.Domain.SchoolAggregate.Entities;
 
 public class Admin : User
 {
-    // The admin should be able to create and desolve classes, so he should have the list of all existing classes
+    // The admin should be able to create and dissolve classes, so he should have the list of all existing classes
     // Actually, from the user base class he already have all students
 
     private readonly List<Student> _students = new();
@@ -92,7 +92,7 @@ public class Admin : User
         return @class;
     }
 
-    public bool DisolveClass(SchoolClassId schoolClassId)
+    public bool DissolveClass(SchoolClassId schoolClassId)
     {
         var @class = _classes.FirstOrDefault(c => c.Id == schoolClassId);
         if (@class is null)
@@ -102,7 +102,7 @@ public class Admin : User
         while (@class.Students.Any())
         {
             /* We remove the last element from the list each time because of the behaviour of lists
-             * when we try to remove an element inside a list, the whole remaining elemenrs got moved
+             * when we try to remove an element inside a list, the whole remaining elements got moved
              * to the index - 1
              */
             var student = @class.Students[@class.Students.Count - 1];
@@ -114,7 +114,7 @@ public class Admin : User
     }
     #endregion
 
-    #region Student Adminitration concerns
+    #region Student Administration concerns
 
     public Student RegisterStudent(
         string? firstName,
@@ -158,6 +158,37 @@ public class Admin : User
 
     #region Teacher administration concerns
 
+    public TeacherAdvisor? AssignTeacherToClass(
+        TeacherAdvisorId teacherId,
+        SchoolClassId classId)
+    {
+        var teacher = Teachers.FirstOrDefault(t => t.Id == teacherId);
+        if(teacher is null)
+            return null;
+
+        var @class = Classes.FirstOrDefault(c => c.Id == classId);
+        if(@class is null)
+            return null;
+
+        teacher.AssignClass(@class);
+        return teacher;
+    }
+
+    public bool UnassignTeacherToClass(
+        TeacherAdvisorId teacherId,
+        SchoolClassId classId)
+    {
+        var teacher = Teachers.FirstOrDefault(t => t.Id == teacherId);
+        if(teacher is null)
+            return false;
+
+        var @class = Classes.FirstOrDefault(c => c.Id == classId);
+        if(@class is null)
+            return false;
+
+        return teacher.UnAssignClass(@class);
+    }
+
     public TeacherAdvisor RegisterTeacher(
         string? firstName,
         string lastName,
@@ -176,7 +207,7 @@ public class Admin : User
 
     public bool DismissTeacher(TeacherAdvisorId teacherId)
     {
-        var @class = _classes.Where(c => c.TeacherAdvisor?.Id == teacherId);
+        var @class = _classes.Where(c => teacherId == c.TeacherAdvisor?.Id);
         if (@class is null)
             return false;
 

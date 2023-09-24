@@ -4,7 +4,7 @@ using Api.Domain.Common.Utilities;
 using Api.Presentation.Utilities;
 using Carter;
 
-namespace Api.Presentation.Endpoints.Students;
+namespace Api.Presentation.Features.Students;
 
 public class RegisterStudent : ICarterModule
 {

@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Api.Application.Authentication.Errors;
 using Api.Application.Authentication.Services;
+using Api.Application.Common.Errors;
 using Api.Application.Repositories;
 using Api.Domain.Common.ValueObjects;
 using Api.Domain.SchoolAggregate;
