@@ -59,34 +59,34 @@ public class Admin : User
     }
 
     public SchoolClass CreateClass(
-        SchoolClassId schoolClassId,
-        TeacherAdvisor? teacherAdvisor,
+        TeacherAdvisorId? teacherId,
         Specialization specialization,
         int year)
     {
-        var @class = SchoolClass.Create(
-            schoolClassId,
-            teacherAdvisor,
+        var teacher = Teachers.FirstOrDefault(t => t.Id == teacherId);
+        var @class = SchoolClass.CreateUnique(
             specialization,
+            teacher,
             year);
 
-        _classes.Add(@class);
+        teacher?.AssignClass(@class);
         return @class;
     }
 
     public SchoolClass CreateClass(
-        SchoolClassId schoolClassId,
-        TeacherAdvisor? teacherAdvisor,
+        TeacherAdvisorId? teacherId,
         Specialization specialization,
         IEnumerable<Student> students,
         int year)
     {
-        var @class = SchoolClass.Create(
-            schoolClassId,
-            teacherAdvisor,
+        var teacher = Teachers.FirstOrDefault(t => t.Id == teacherId);
+        var @class = SchoolClass.CreateUnique(
             specialization,
-            students,
+            teacher,
             year);
+
+        foreach (var student in students)
+            @class.AddStudent(student);
 
         _classes.Add(@class);
         return @class;

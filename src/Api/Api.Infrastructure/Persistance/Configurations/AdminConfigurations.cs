@@ -9,8 +9,9 @@ public class AdminConfigurations : IEntityTypeConfiguration<Admin>
     public void Configure(EntityTypeBuilder<Admin> builder)
     {
         builder.Property(a => a.Id)
-            .HasConversion(id => id.Value,
-            value => AdminId.Create(value)!);
+            .HasConversion(
+                id => id.Value,
+                value => AdminId.Create(value)!);
 
         builder.HasMany(a => a.Students);
 

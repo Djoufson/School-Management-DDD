@@ -15,7 +15,7 @@ public class Repository<TEntity, TId> : IRepository<TEntity, TId>
         _context = context;
     }
 
-    public async Task<TEntity?> AddAsync(
+    public virtual async Task<TEntity?> AddAsync(
         TEntity entity,
         CancellationToken cancellationToken = default)
     {
@@ -24,7 +24,7 @@ public class Repository<TEntity, TId> : IRepository<TEntity, TId>
         return entity;
     }
 
-    public async Task<int> DeleteAsync(
+    public virtual async Task<int> DeleteAsync(
         Expression<Func<TEntity, bool>> predicate,
         CancellationToken cancellationToken = default)
     {
@@ -34,7 +34,7 @@ public class Repository<TEntity, TId> : IRepository<TEntity, TId>
             .ExecuteDeleteAsync(cancellationToken);
     }
 
-    public async Task<int> DeleteByIdAsync(TId id, CancellationToken cancellationToken = default)
+    public virtual async Task<int> DeleteByIdAsync(TId id, CancellationToken cancellationToken = default)
     {
         return await _context
             .Set<TEntity>()
@@ -42,7 +42,7 @@ public class Repository<TEntity, TId> : IRepository<TEntity, TId>
             .ExecuteDeleteAsync(cancellationToken);
     }
 
-    public async Task<IReadOnlyList<TEntity>> GetAsync(
+    public virtual async Task<IReadOnlyList<TEntity>> GetAsync(
         Expression<Func<TEntity, bool>> predicate,
         CancellationToken cancellationToken = default)
     {
@@ -55,7 +55,7 @@ public class Repository<TEntity, TId> : IRepository<TEntity, TId>
         return values;
     }
 
-    public async Task<IReadOnlyList<TEntity>> GetAsync(CancellationToken cancellationToken = default)
+    public virtual async Task<IReadOnlyList<TEntity>> GetAsync(CancellationToken cancellationToken = default)
     {
         var entities = await _context
             .Set<TEntity>()
@@ -65,7 +65,7 @@ public class Repository<TEntity, TId> : IRepository<TEntity, TId>
         return entities;
     }
 
-    public async Task<TEntity?> GetByIdAsync(TId id, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity?> GetByIdAsync(TId id, CancellationToken cancellationToken = default)
     {
         var entity = await _context
             .Set<TEntity>()

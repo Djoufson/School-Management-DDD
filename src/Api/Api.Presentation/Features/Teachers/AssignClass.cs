@@ -1,3 +1,4 @@
+using Api.Application.TeachersManagement.AssignClass;
 using Api.Domain.Common.Utilities;
 using Api.Presentation.Utilities;
 using Carter;
