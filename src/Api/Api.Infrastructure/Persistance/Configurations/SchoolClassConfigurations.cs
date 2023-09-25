@@ -18,5 +18,8 @@ public class SchoolClassConfigurations : IEntityTypeConfiguration<SchoolClass>
             .WithMany(t => t.Classes);
         builder.HasMany(c => c.Students)
             .WithMany(s => s.Classes);
+
+        builder.Property(c => c.Year);
+        builder.HasIndex(c => c.Year);
     }
 }
