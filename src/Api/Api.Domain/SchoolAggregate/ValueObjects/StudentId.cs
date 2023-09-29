@@ -24,12 +24,9 @@ public class StudentId : UserId
             Random.Shared.Next(10000, 99999));
     }
 
-    public static new StudentId? Create(string value)
+    public static new StudentId Create(string value)
     {
         var (year, code, salt) = Decrypt(value, _prefix);
-        if (year == 0 || salt == 0)
-            return null;
-
         return new(code, year, salt);
     }
 

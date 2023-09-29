@@ -21,9 +21,7 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, Result<PagedL
                 u.FirstName,
                 u.LastName,
                 u.Password.Hash,
-                u.Role,
-                u.Classes.Select(
-                    c => c.Id.Value).ToArray()))
+                u.Role))
             .ToList();
 
         return new PagedList<UserResponse>(users, 1, users.Count, users.Count);

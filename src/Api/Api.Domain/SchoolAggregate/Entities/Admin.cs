@@ -12,7 +12,9 @@ public class Admin : User
 
     private readonly List<Student> _students = new();
     private readonly List<TeacherAdvisor> _teachers = new();
+    private readonly List<SchoolClass> _classes = new();
 
+    public IReadOnlyList<SchoolClass> Classes => _classes.AsReadOnly();
     public IReadOnlyList<Student> Students => _students.AsReadOnly();
     public IReadOnlyList<TeacherAdvisor> Teachers => _teachers.AsReadOnly();
 
@@ -45,11 +47,13 @@ public class Admin : User
 
     #region Classes Administration concerns
     public SchoolClass CreateUniqueClass(
+        Admin admin,
         Specialization specialization,
         TeacherAdvisor? teacherAdvisor,
         int year)
     {
         var @class = SchoolClass.CreateUnique(
+            admin,
             specialization,
             teacherAdvisor,
             year);
@@ -59,12 +63,14 @@ public class Admin : User
     }
 
     public SchoolClass CreateClass(
+        Admin admin,
         TeacherAdvisorId? teacherId,
         Specialization specialization,
         int year)
     {
         var teacher = Teachers.FirstOrDefault(t => t.Id == teacherId);
         var @class = SchoolClass.CreateUnique(
+            admin,
             specialization,
             teacher,
             year);
@@ -74,6 +80,7 @@ public class Admin : User
     }
 
     public SchoolClass CreateClass(
+        Admin admin,
         TeacherAdvisorId? teacherId,
         Specialization specialization,
         IEnumerable<Student> students,
@@ -81,6 +88,7 @@ public class Admin : User
     {
         var teacher = Teachers.FirstOrDefault(t => t.Id == teacherId);
         var @class = SchoolClass.CreateUnique(
+            admin,
             specialization,
             teacher,
             year);

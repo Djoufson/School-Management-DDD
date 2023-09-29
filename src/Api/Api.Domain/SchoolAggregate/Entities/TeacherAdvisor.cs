@@ -8,6 +8,8 @@ namespace Api.Domain.SchoolAggregate.Entities;
 // Manages the students of his class
 public class TeacherAdvisor : User
 {
+    private readonly List<SchoolClass> _classes = new();
+    public IReadOnlyList<SchoolClass> Classes => _classes.AsReadOnly();
     private TeacherAdvisor(
         TeacherAdvisorId id,
         string? firstName,
@@ -37,6 +39,28 @@ public class TeacherAdvisor : User
         return true;
     }
 
+    #region Students Management Concerns
+    public SchoolClass? AddStudent(SchoolClassId classId, Student student)
+    {
+        var @class = Classes.FirstOrDefault(c => c.Id == classId);
+        @class?.AddStudent(student);
+        return @class;
+    }
+
+    public SchoolClass? AddRangeStudents(SchoolClassId classId, IEnumerable<Student> students)
+    {
+        var @class = Classes.FirstOrDefault(c => c.Id == classId);
+        @class?.AddRangeStudents(students);
+        return @class;
+    }
+
+    public SchoolClass? RemoveStudent(SchoolClassId classId, Student student)
+    {
+        var @class = Classes.FirstOrDefault(c => c.Id == classId);
+        @class?.RemoveStudent(student);
+        return @class;
+    }
+
     public bool NoteStudent(
         Discipline discipline,
         StudentId studentId,
@@ -55,6 +79,7 @@ public class TeacherAdvisor : User
 
         return true;
     }
+    #endregion
 
     public static TeacherAdvisor CreateUnique(
         string? firstName,

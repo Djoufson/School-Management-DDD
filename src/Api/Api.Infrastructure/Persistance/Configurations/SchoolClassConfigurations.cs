@@ -14,9 +14,13 @@ public class SchoolClassConfigurations : IEntityTypeConfiguration<SchoolClass>
                 id => id.Value,
                 value => SchoolClassId.Create(value));
         builder.HasIndex(c => c.Specialization);
-        builder.HasOne(c => c.TeacherAdvisor)
+
+        builder
+            .HasOne(c => c.TeacherAdvisor)
             .WithMany(t => t.Classes);
-        builder.HasMany(c => c.Students)
+
+        builder
+            .HasMany(c => c.Students)
             .WithMany(s => s.Classes);
 
         builder.Property(c => c.Year);

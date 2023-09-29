@@ -30,7 +30,11 @@ public class CreateClassCommandHandler : IRequestHandler<CreateClassCommand, Res
         if(admin is null)
             return Result.Fail(new UserNotFoundError(request.AdminId));
 
-        var @class = admin.CreateClass(teacherAdvisorId, (Specialization)request.Specialization, request.Year);
+        var @class = admin.CreateClass(
+            admin,
+            teacherAdvisorId,
+            (Specialization)request.Specialization,
+            request.Year);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

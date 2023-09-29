@@ -5,6 +5,5 @@ public record UserResponse(
     string? FirstName,
     string LastName,
     string Password,
-    string Role,
-    IReadOnlyList<string> Classes
+    string Role
     );

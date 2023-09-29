@@ -3,6 +3,7 @@ using System;
 using Api.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230925191832_Refactoring The Student And Teacher Tables With Classes Relationship")]
+    partial class RefactoringTheStudentAndTeacherTablesWithClassesRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.10");
@@ -62,7 +65,6 @@ namespace Api.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("AdminId")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Specialization")
@@ -191,17 +193,13 @@ namespace Api.Infrastructure.Migrations
 
             modelBuilder.Entity("Api.Domain.SchoolAggregate.Entities.SchoolClass", b =>
                 {
-                    b.HasOne("Api.Domain.SchoolAggregate.Entities.Admin", "Admin")
+                    b.HasOne("Api.Domain.SchoolAggregate.Entities.Admin", null)
                         .WithMany("Classes")
-                        .HasForeignKey("AdminId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AdminId");
 
                     b.HasOne("Api.Domain.SchoolAggregate.Entities.TeacherAdvisor", "TeacherAdvisor")
                         .WithMany("Classes")
                         .HasForeignKey("TeacherAdvisorId");
-
-                    b.Navigation("Admin");
 
                     b.Navigation("TeacherAdvisor");
                 });

@@ -21,6 +21,7 @@
     <None Remove="StudentsManagement\Registration\" />
     <None Remove="TeachersManagement\" />
     <None Remove="TeachersManagement\Registration\" />
+    <None Remove="ClassesManagement\Errors\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authentication\" />
@@ -35,6 +36,7 @@
     <Folder Include="StudentsManagement\" />
     <Folder Include="StudentsManagement\Registration\" />
     <Folder Include="TeachersManagement\AssignTeacher\" />
+    <Folder Include="ClassesManagement\Errors\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentResults" Version="3.15.2" />

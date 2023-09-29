@@ -10,10 +10,13 @@ namespace Api.Domain.SchoolAggregate.Entities;
 public class Student : User
 {
     private readonly List<Notation> _notations = new();
+    private readonly List<SchoolClass> _classes = new();
     public DateTime DateOfBirth { get; }
     public int Level { get; private set; }
     public Specialization? Specialization { get; private set; }
+
     public IReadOnlyList<Notation> Notations => _notations.AsReadOnly();
+    public IReadOnlyList<SchoolClass> Classes => _classes.AsReadOnly();
 
     private Student(
         StudentId id,

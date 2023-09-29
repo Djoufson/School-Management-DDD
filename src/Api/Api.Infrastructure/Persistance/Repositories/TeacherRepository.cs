@@ -10,4 +10,11 @@ public class TeacherRepository : Repository<TeacherAdvisor, UserId>, ITeacherRep
     public TeacherRepository(AppDbContext context) : base(context)
     {
     }
+
+    public override async Task<TeacherAdvisor?> GetByIdAsync(UserId id, CancellationToken cancellationToken = default)
+    {
+        return await _context.TeacherAdvisors
+            .Include(t => t.Classes)
+            .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+    }
 }

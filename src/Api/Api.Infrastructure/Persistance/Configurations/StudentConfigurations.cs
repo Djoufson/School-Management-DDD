@@ -1,5 +1,4 @@
 ﻿using Api.Domain.AcademicAggregate.ValueObjects;
-using Api.Domain.SchoolAggregate;
 using Api.Domain.SchoolAggregate.Entities;
 using Api.Domain.SchoolAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -31,6 +30,7 @@ public class StudentConfigurations : IEntityTypeConfiguration<Student>
 
             snb.HasOne(n => n.Subject);
         });
+
         builder.HasMany(s => s.Classes).WithMany(c => c.Students);
 
         builder.Navigation(s => s.Classes).Metadata.SetField("_classes");
