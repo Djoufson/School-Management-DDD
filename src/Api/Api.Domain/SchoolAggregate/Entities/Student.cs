@@ -37,14 +37,17 @@ public class Student : User
     {
     }
 
-    internal void AddClass(SchoolClass @class)
+    internal bool AddClass(SchoolClass @class)
     {
+        if(_classes.Contains(@class))
+            return false;
         _classes.Add(@class);
+        return true;
     }
 
-    internal void RemoveClass(SchoolClass @class)
+    internal bool RemoveClass(SchoolClass @class)
     {
-        _classes.Remove(@class);
+        return _classes.Remove(@class);
     }
 
     internal bool AddNotation(Notation notation)

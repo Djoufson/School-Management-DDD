@@ -15,6 +15,7 @@ public class TeacherRepository : Repository<TeacherAdvisor, UserId>, ITeacherRep
     {
         return await _context.TeacherAdvisors
             .Include(t => t.Classes)
+            .ThenInclude(c => c.Students)
             .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
     }
 }

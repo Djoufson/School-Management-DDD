@@ -76,6 +76,7 @@ public class Admin : User
             year);
 
         teacher?.AssignClass(@class);
+        _classes.Add(@class);
         return @class;
     }
 
@@ -179,6 +180,7 @@ public class Admin : User
             return null;
 
         teacher.AssignClass(@class);
+        @class.ChangeTeacher(teacher);
         return teacher;
     }
 
@@ -194,6 +196,7 @@ public class Admin : User
         if(@class is null)
             return false;
 
+        @class.ChangeTeacher(null);
         return teacher.UnAssignClass(@class);
     }
 

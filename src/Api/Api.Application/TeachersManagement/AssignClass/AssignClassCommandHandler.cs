@@ -5,12 +5,12 @@ using Api.Domain.SchoolAggregate.ValueObjects;
 
 namespace Api.Application.TeachersManagement.AssignClass;
 
-public class AssignTeacherCommandHandler : IRequestHandler<AssignTeacherToClassCommand, Result<TeacherResponse>>
+public class AssignClassCommandHandler : IRequestHandler<AssignClassToTeacherCommand, Result<TeacherResponse>>
 {
     private readonly IAdminRepository _adminRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public AssignTeacherCommandHandler(
+    public AssignClassCommandHandler(
         IAdminRepository teacherRepository,
         IUnitOfWork unitOfWork)
     {
@@ -18,7 +18,7 @@ public class AssignTeacherCommandHandler : IRequestHandler<AssignTeacherToClassC
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<TeacherResponse>> Handle(AssignTeacherToClassCommand request, CancellationToken cancellationToken)
+    public async Task<Result<TeacherResponse>> Handle(AssignClassToTeacherCommand request, CancellationToken cancellationToken)
     {
         var adminId = AdminId.Create(request.AdminId);
         var teacherId = TeacherAdvisorId.Create(request.TeacherId);

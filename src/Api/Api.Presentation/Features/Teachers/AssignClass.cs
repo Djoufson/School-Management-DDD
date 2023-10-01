@@ -22,7 +22,7 @@ public class AssignClass : ICarterModule
         ISender sender)
     {
         var adminId = AuthHeaders.GetUserId(context.Request.Headers);
-        var command = new AssignTeacherToClassCommand(adminId, teacherId, request.ClassId);
+        var command = new AssignClassToTeacherCommand(adminId, teacherId, request.ClassId);
         var response = await sender.Send(command);
         return Results.Ok(response.Value);
     }

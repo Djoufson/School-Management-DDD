@@ -101,8 +101,10 @@ public class SchoolClass : Entity<SchoolClassId>
 
     internal bool AddStudent(Student student)
     {
+        if(_students.Contains(student))
+            return false;
+    
         _students.Add(student);
-        student.AddClass(this);
         return true;
     }
 

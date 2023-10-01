@@ -19,11 +19,15 @@ public class SchoolClassConfigurations : IEntityTypeConfiguration<SchoolClass>
             .HasOne(c => c.TeacherAdvisor)
             .WithMany(t => t.Classes);
 
-        builder
-            .HasMany(c => c.Students)
-            .WithMany(s => s.Classes);
+        // builder
+        //     .HasMany(c => c.Students)
+        //     .WithMany(s => s.Classes);
 
         builder.Property(c => c.Year);
         builder.HasIndex(c => c.Year);
+
+        builder.Navigation(s => s.Students).Metadata.SetField("_students");
+        builder.Metadata.FindNavigation(nameof(SchoolClass.Students))?
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

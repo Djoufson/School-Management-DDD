@@ -35,7 +35,6 @@
     <Folder Include="Common\" />
     <Folder Include="StudentsManagement\" />
     <Folder Include="StudentsManagement\Registration\" />
-    <Folder Include="TeachersManagement\AssignTeacher\" />
     <Folder Include="ClassesManagement\Errors\" />
   </ItemGroup>
   <ItemGroup>

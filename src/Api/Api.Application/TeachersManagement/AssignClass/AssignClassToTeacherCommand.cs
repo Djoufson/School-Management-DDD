@@ -1,6 +1,6 @@
 ﻿namespace Api.Application.TeachersManagement.AssignClass;
 
-public record AssignTeacherToClassCommand(
+public record AssignClassToTeacherCommand(
     string AdminId,
     string TeacherId,
     string ClassId

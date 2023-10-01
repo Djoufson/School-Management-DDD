@@ -31,10 +31,12 @@ public class StudentConfigurations : IEntityTypeConfiguration<Student>
             snb.HasOne(n => n.Subject);
         });
 
-        builder.HasMany(s => s.Classes).WithMany(c => c.Students);
+        builder
+            .HasMany(s => s.Classes)
+            .WithMany(c => c.Students);
 
         builder.Navigation(s => s.Classes).Metadata.SetField("_classes");
-        builder.Metadata.FindNavigation(nameof(Student.Classes))?
-            .SetPropertyAccessMode(PropertyAccessMode.Field);
+        // builder.Metadata.FindNavigation(nameof(Student.Classes))!
+        //     .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

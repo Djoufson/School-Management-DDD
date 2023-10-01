@@ -25,25 +25,25 @@ public class TeacherAdvisor : User
 
     internal bool AssignClass(SchoolClass @class)
     {
-        // Validation checks
+        if(_classes.Contains(@class))
+            return false;
+
         _classes.Add(@class);
-        @class.ChangeTeacher(this);
         return true;
     }
 
     internal bool UnAssignClass(SchoolClass @class)
-    {
-        // Verification checks
-        _classes.Remove(@class);
-        @class.ChangeTeacher(null);
-        return true;
-    }
+        => _classes.Remove(@class);
 
     #region Students Management Concerns
     public SchoolClass? AddStudent(SchoolClassId classId, Student student)
     {
         var @class = Classes.FirstOrDefault(c => c.Id == classId);
-        @class?.AddStudent(student);
+        if(@class is null)
+            return null;
+
+        @class.AddStudent(student);
+        student.AddClass(@class);
         return @class;
     }
 
