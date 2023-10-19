@@ -41,15 +41,14 @@ public class RegisterStudentCommandHandler : IRequestHandler<RegisterStudentComm
             request.Specialization);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return null!;
-        // return new StudentResponse(
-        //     student.Id.Value,
-        //     student.FirstName,
-        //     student.LastName,
-        //     student.Password.Hash,
-        //     student.Role,
-        //     student.Classes
-        //         .Select(c => c.Id.Value)
-        //         .ToArray());
+        return new StudentResponse(
+            student.Id.Value,
+            student.FirstName,
+            student.LastName,
+            student.Password.Hash,
+            student.Role,
+            student.Seats
+                .Select(c => c.Class.Id.Value)
+                .ToArray());
     }
 }

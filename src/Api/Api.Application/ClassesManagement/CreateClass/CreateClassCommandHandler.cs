@@ -39,27 +39,26 @@ public class CreateClassCommandHandler : IRequestHandler<CreateClassCommand, Res
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return null!;
-        // return new ClassResponse(
-        //     @class.Id.Value,
-        //     @class.Year,
-        //     (int)@class.Specialization,
-        //     @class.TeacherAdvisor is not null ? 
-        //         new ClassUser(
-        //             @class.TeacherAdvisor?.Id.Value!,
-        //             @class.TeacherAdvisor?.FirstName,
-        //             @class.TeacherAdvisor?.LastName!,
-        //             @class.TeacherAdvisor?.Password.Hash!,
-        //             @class.TeacherAdvisor?.Role!) 
-        //         : null,
-        //     @class.Students.Any() ? 
-        //         @class.Students.Select(s => new ClassUser(
-        //             s.Id.Value,
-        //             s.FirstName,
-        //             s.LastName!,
-        //             s.Password.Hash!,
-        //             s.Role!)).ToList()
-        //         : Array.Empty<ClassUser>()
-        // );
+        return new ClassResponse(
+            @class.Id.Value,
+            @class.Year,
+            (int)@class.Specialization,
+            @class.TeacherAdvisor is not null ? 
+                new ClassUser(
+                    @class.TeacherAdvisor?.Id.Value!,
+                    @class.TeacherAdvisor?.FirstName,
+                    @class.TeacherAdvisor?.LastName!,
+                    @class.TeacherAdvisor?.Password.Hash!,
+                    @class.TeacherAdvisor?.Role!) 
+                : null,
+            @class.Seats.Any() ? 
+                @class.Seats.Select(s => new ClassUser(
+                    s.Student.Id.Value,
+                    s.Student.FirstName,
+                    s.Student.LastName!,
+                    s.Student.Password.Hash!,
+                    s.Student.Role!)).ToList()
+                : Array.Empty<ClassUser>()
+        );
     }
 }

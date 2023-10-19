@@ -6,8 +6,10 @@ namespace Api.Domain.SchoolAggregate.Entities;
 
 public class SchoolClass : Entity<SchoolClassId>
 {
-    private readonly Seat[] _seats;
-    public int Year { get; }
+    private readonly List<Seat> _seats = new();
+    public int AvailableSeats { get; private set; }
+    public int TotalSeats { get; private set; }
+    public int Year { get; private set; }
     public Specialization Specialization { get; }
     public TeacherAdvisor? TeacherAdvisor { get; private set; }
     public IReadOnlyList<Seat> Seats => _seats.AsReadOnly();
@@ -25,7 +27,8 @@ public class SchoolClass : Entity<SchoolClassId>
         Specialization = specialization;
         Year = year;
         Admin = admin;
-        _seats = new Seat[seatsNumber];
+        TotalSeats = seatsNumber;
+        AvailableSeats = seatsNumber;
     }
 
 #pragma warning disable CS8618
@@ -72,29 +75,43 @@ public class SchoolClass : Entity<SchoolClassId>
         TeacherAdvisor = teacher;
     }
 
-    internal bool AddStudent(Student student)
+    internal Seat? AddStudent(Student student)
     {
-        // if(_students.Contains(student))
-        //     return false;
-    
-        // _students.Add(student);
-        return true;
+        if(AvailableSeats <= 0)
+            return null;
+
+        bool exist = _seats.Any(s => s.Student == student);
+        if(exist)
+            return null;
+
+        var seat = Seat.Create(student, this);
+        _seats.Add(seat);
+        AvailableSeats--;
+        return seat;
     }
 
     internal bool RemoveStudent(Student student)
     {
-        // _students.Add(student);
-        // student.RemoveClass(this);
+        if(AvailableSeats == TotalSeats)
+            return false;
+
+        var toRemoveSeats = _seats.Where(s => s.Student == student).ToArray();
+        int i = 0;
+        while(toRemoveSeats.Any())
+        {
+            _seats.Remove(toRemoveSeats[i]);
+        }
+
+        AvailableSeats++;
         return true;
     }
 
-    internal bool AddRangeStudents(IEnumerable<Student> students)
+    internal bool CleanSeats()
     {
-        // _students.AddRange(students);
-        foreach (var student in students)
-        {
-            // student.AddClass(this);
-        }
+        foreach(var seat in _seats)
+            seat.Student.RemoveSeat(seat);
+
+        _seats.Clear();
         return true;
     }
 }

@@ -15,6 +15,10 @@ public sealed class SeatId : ValueObject
     {
         return new(id);
     }
+    public static SeatId CreateUnique()
+    {
+        return new(Guid.NewGuid());
+    }
 
     public override IEnumerable<object> GetEqualityComparer()
     {

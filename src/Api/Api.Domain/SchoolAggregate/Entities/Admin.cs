@@ -91,16 +91,7 @@ public class Admin : User
             return false;
 
         @class.ChangeTeacher(null);
-        // while (@class.Students.Any())
-        // {
-        //     /* We remove the last element from the list each time because of the behaviour of lists
-        //      * when we try to remove an element inside a list, the whole remaining elements got moved
-        //      * to the index - 1
-        //      */
-        //     var student = @class.Students[@class.Students.Count - 1];
-        //     // student.RemoveClass(@class);
-        //     @class.RemoveStudent(student);
-        // }
+        @class.CleanSeats();
 
         return true;
     }
@@ -130,22 +121,6 @@ public class Admin : User
         return student;
     }
 
-    public bool DismissStudent(StudentId studentId)
-    {
-        // var student = _students.FirstOrDefault(s => s.Id == studentId);
-        // if (student is null)
-        //     return false;
-
-        // var @class = _classes.Where(c => c.Students.Contains(student)).OrderBy(c => c.Year).Last();
-        // if (@class is null)
-        //     return false;
-
-        // @class.RemoveStudent(student);
-        // // while(student.Classes.Any())
-        // //     student.RemoveClass(student.Classes[student.Classes.Count - 1]);
-
-        return true;
-    }
     #endregion
 
     #region Teacher administration concerns
@@ -197,16 +172,6 @@ public class Admin : User
 
         _teachers.Add(teacher);
         return teacher;
-    }
-
-    public bool DismissTeacher(TeacherAdvisorId teacherId)
-    {
-        var @class = _classes.Where(c => teacherId == c.TeacherAdvisor?.Id);
-        if (@class is null)
-            return false;
-
-        //@class.Last().RemoveTeacher();
-        return true;
     }
     #endregion
 }

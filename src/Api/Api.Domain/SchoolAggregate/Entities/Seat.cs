@@ -5,9 +5,9 @@ namespace Api.Domain.SchoolAggregate.Entities;
 
 public sealed class Seat : Entity<SeatId>
 {
-    public Student? Student { get; private set; }
+    public Student Student { get; private set; }
     public SchoolClass Class { get; private set; }
-    private Seat(Student? student, SchoolClass @class)
+    private Seat(SeatId id, Student student, SchoolClass @class) : base(id)
     {
         Student = student;
         Class = @class;
@@ -19,8 +19,8 @@ public sealed class Seat : Entity<SeatId>
     }
     #pragma warning restore CS8618
 
-    public static Seat Create(Student? student, SchoolClass @class)
+    public static Seat Create(Student student, SchoolClass @class)
     {
-        return new(student, @class);
+        return new(SeatId.CreateUnique(), student, @class);
     }
 }

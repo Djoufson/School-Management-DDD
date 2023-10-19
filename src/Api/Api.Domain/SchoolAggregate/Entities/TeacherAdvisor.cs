@@ -36,22 +36,18 @@ public class TeacherAdvisor : User
         => _classes.Remove(@class);
 
     #region Students Management Concerns
-    public SchoolClass? AddStudent(SchoolClassId classId, Student student)
+    public Seat? AddStudent(SchoolClassId classId, Student student)
     {
         var @class = Classes.FirstOrDefault(c => c.Id == classId);
         if(@class is null)
             return null;
 
-        @class.AddStudent(student);
-        // student.AddClass(@class);
-        return @class;
-    }
+        var seat = @class.AddStudent(student);
+        if(seat is null)
+            return null;
 
-    public SchoolClass? AddRangeStudents(SchoolClassId classId, IEnumerable<Student> students)
-    {
-        var @class = Classes.FirstOrDefault(c => c.Id == classId);
-        @class?.AddRangeStudents(students);
-        return @class;
+        student.GiveASeat(seat);
+        return seat;
     }
 
     public SchoolClass? RemoveStudent(SchoolClassId classId, Student student)

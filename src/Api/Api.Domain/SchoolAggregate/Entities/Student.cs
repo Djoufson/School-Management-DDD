@@ -45,7 +45,7 @@ public class Student : User
         return true;
     }
 
-    internal bool RemoveClass(Seat seat)
+    internal bool RemoveSeat(Seat seat)
     {
         return _seats.Remove(seat);
     }

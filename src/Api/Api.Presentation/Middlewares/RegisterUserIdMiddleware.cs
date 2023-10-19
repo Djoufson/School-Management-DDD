@@ -11,7 +11,8 @@ public class RegisterUserIdMiddleware : IMiddleware
         // Before
         Claim? userIdClaim = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
         string userId = userIdClaim is null ? string.Empty : userIdClaim.Value;
-        context.Request.Headers.TryAdd(Headers.UserId, userId);
+        if(!string.IsNullOrEmpty(userId))
+            context.Request.Headers.TryAdd(Headers.UserId, userId);
 
         await next(context);
         // After

@@ -32,6 +32,8 @@ public class SchoolClassConfigurations : IEntityTypeConfiguration<SchoolClass>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(c => c.Year);
+        builder.Property(c => c.AvailableSeats);
+        builder.Property(c => c.TotalSeats);
         builder.HasIndex(c => c.Year);
 
         builder.Navigation(s => s.Seats).Metadata.SetField("_seats");
