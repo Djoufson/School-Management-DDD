@@ -20,14 +20,22 @@ public class SchoolClassConfigurations : IEntityTypeConfiguration<SchoolClass>
             .WithMany(t => t.Classes);
 
         // builder
-        //     .HasMany(c => c.Students)
-        //     .WithMany(s => s.Classes);
+        //     .OwnsMany(c => c.Seats, csb =>
+        //     {
+        //         csb.ToTable("Seats");
+        //         csb.WithOwner();
+        //     });
+
+        builder
+            .HasMany(s => s.Seats)
+            .WithOne(c => c.Class)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(c => c.Year);
         builder.HasIndex(c => c.Year);
 
-        builder.Navigation(s => s.Students).Metadata.SetField("_students");
-        builder.Metadata.FindNavigation(nameof(SchoolClass.Students))?
+        builder.Navigation(s => s.Seats).Metadata.SetField("_seats");
+        builder.Metadata.FindNavigation(nameof(SchoolClass.Seats))?
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

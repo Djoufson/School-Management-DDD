@@ -15,7 +15,7 @@ public class TeacherRepository : Repository<TeacherAdvisor, UserId>, ITeacherRep
     {
         return await _context.TeacherAdvisors
             .Include(t => t.Classes)
-            .ThenInclude(c => c.Students)
+            .ThenInclude(c => c.Seats)
             .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
     }
 }

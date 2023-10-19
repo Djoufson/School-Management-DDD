@@ -6,12 +6,11 @@ namespace Api.Domain.SchoolAggregate.Entities;
 
 public class SchoolClass : Entity<SchoolClassId>
 {
-    private readonly List<Student> _students = new();
-
+    private readonly Seat[] _seats;
     public int Year { get; }
     public Specialization Specialization { get; }
     public TeacherAdvisor? TeacherAdvisor { get; private set; }
-    public IReadOnlyList<Student> Students => _students.AsReadOnly();
+    public IReadOnlyList<Seat> Seats => _seats.AsReadOnly();
     public Admin Admin { get; internal set; }
 
     private SchoolClass(
@@ -19,27 +18,14 @@ public class SchoolClass : Entity<SchoolClassId>
         Specialization specialization,
         TeacherAdvisor? teacherAdvisor,
         int year,
-        Admin admin) : base(id)
+        Admin admin,
+        int seatsNumber) : base(id)
     {
         TeacherAdvisor = teacherAdvisor;
         Specialization = specialization;
         Year = year;
         Admin = admin;
-    }
-
-    private SchoolClass(
-        SchoolClassId id,
-        Specialization specialization,
-        TeacherAdvisor? teacherAdvisor,
-        IEnumerable<Student> students,
-        int year,
-        Admin admin) : base(id)
-    {
-        _students = students.ToList();
-        TeacherAdvisor = teacherAdvisor;
-        Specialization = specialization;
-        Year = year;
-        Admin = admin;
+        _seats = new Seat[seatsNumber];
     }
 
 #pragma warning disable CS8618
@@ -52,14 +38,16 @@ public class SchoolClass : Entity<SchoolClassId>
         Admin admin,
         Specialization specialization,
         TeacherAdvisor? teacherAdvisor,
-        int year)
+        int year,
+        int seatsNumber)
     {
         return new(
             SchoolClassId.CreateUnique(specialization, year),
             specialization,
             teacherAdvisor,
             year,
-            admin);
+            admin,
+            seatsNumber);
     }
 
     internal static SchoolClass Create(
@@ -67,31 +55,16 @@ public class SchoolClass : Entity<SchoolClassId>
         SchoolClassId schoolClassId,
         Specialization specialization,
         TeacherAdvisor? teacherAdvisor,
-        int year)
+        int year,
+        int seatsNumber)
     {
         return new(
             schoolClassId,
             specialization,
             teacherAdvisor,
             year,
-            admin);
-    }
-
-    internal static SchoolClass Create(
-        Admin admin,
-        SchoolClassId schoolClassId,
-        TeacherAdvisor? teacherAdvisor,
-        Specialization specialization,
-        IEnumerable<Student> students,
-        int year)
-    {
-        return new(
-            schoolClassId,
-            specialization,
-            teacherAdvisor,
-            students,
-            year,
-            admin);
+            admin,
+            seatsNumber);
     }
 
     internal void ChangeTeacher(TeacherAdvisor? teacher)
@@ -101,23 +74,23 @@ public class SchoolClass : Entity<SchoolClassId>
 
     internal bool AddStudent(Student student)
     {
-        if(_students.Contains(student))
-            return false;
+        // if(_students.Contains(student))
+        //     return false;
     
-        _students.Add(student);
+        // _students.Add(student);
         return true;
     }
 
     internal bool RemoveStudent(Student student)
     {
-        _students.Add(student);
+        // _students.Add(student);
         // student.RemoveClass(this);
         return true;
     }
 
     internal bool AddRangeStudents(IEnumerable<Student> students)
     {
-        _students.AddRange(students);
+        // _students.AddRange(students);
         foreach (var student in students)
         {
             // student.AddClass(this);

@@ -67,18 +67,19 @@ public class TeacherAdvisor : User
         int year,
         decimal note)
     {
-        var @class = _classes
-            .FirstOrDefault(c => c.Year == year && c.Students.Any(s => s.Id == studentId));
+        // var @class = _classes
+        //     .FirstOrDefault(c => c.Year == year && c.Students.Any(s => s.Id == studentId));
 
-        var student = @class?.Students.FirstOrDefault(s => s.Id == studentId);
-        if(student is null)
-            return false;
+        // var student = @class?.Students.FirstOrDefault(s => s.Id == studentId);
+        // if(student is null)
+        //     return false;
 
-        student.AddNotation(
-            Notation.CreateUnique(student, note, discipline));
+        // student.AddNotation(
+        //     Notation.CreateUnique(student, note, discipline));
 
         return true;
     }
+
     #endregion
 
     public static TeacherAdvisor CreateUnique(

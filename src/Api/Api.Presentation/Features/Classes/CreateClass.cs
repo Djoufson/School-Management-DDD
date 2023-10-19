@@ -21,7 +21,8 @@ public class CreateClass : ICarterModule
             adminId,
             request.Specialization,
             request.TeacherAdvisorId,
-            request.Year);
+            request.Year,
+            request.SeatsNumber);
 
         var response = await sender.Send(command);
         return Results.Ok(response.Value);
@@ -30,5 +31,6 @@ public class CreateClass : ICarterModule
     public record CreateClassRequest(
         int Specialization,
         string? TeacherAdvisorId,
-        int Year);
+        int Year,
+        int SeatsNumber);
 }

@@ -34,30 +34,32 @@ public class CreateClassCommandHandler : IRequestHandler<CreateClassCommand, Res
             admin,
             teacherAdvisorId,
             (Specialization)request.Specialization,
-            request.Year);
+            request.Year,
+            request.SeatsNumber);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return new ClassResponse(
-            @class.Id.Value,
-            @class.Year,
-            (int)@class.Specialization,
-            @class.TeacherAdvisor is not null ? 
-                new ClassUser(
-                    @class.TeacherAdvisor?.Id.Value!,
-                    @class.TeacherAdvisor?.FirstName,
-                    @class.TeacherAdvisor?.LastName!,
-                    @class.TeacherAdvisor?.Password.Hash!,
-                    @class.TeacherAdvisor?.Role!) 
-                : null,
-            @class.Students.Any() ? 
-                @class.Students.Select(s => new ClassUser(
-                    s.Id.Value,
-                    s.FirstName,
-                    s.LastName!,
-                    s.Password.Hash!,
-                    s.Role!)).ToList()
-                : Array.Empty<ClassUser>()
-        );
+        return null!;
+        // return new ClassResponse(
+        //     @class.Id.Value,
+        //     @class.Year,
+        //     (int)@class.Specialization,
+        //     @class.TeacherAdvisor is not null ? 
+        //         new ClassUser(
+        //             @class.TeacherAdvisor?.Id.Value!,
+        //             @class.TeacherAdvisor?.FirstName,
+        //             @class.TeacherAdvisor?.LastName!,
+        //             @class.TeacherAdvisor?.Password.Hash!,
+        //             @class.TeacherAdvisor?.Role!) 
+        //         : null,
+        //     @class.Students.Any() ? 
+        //         @class.Students.Select(s => new ClassUser(
+        //             s.Id.Value,
+        //             s.FirstName,
+        //             s.LastName!,
+        //             s.Password.Hash!,
+        //             s.Role!)).ToList()
+        //         : Array.Empty<ClassUser>()
+        // );
     }
 }

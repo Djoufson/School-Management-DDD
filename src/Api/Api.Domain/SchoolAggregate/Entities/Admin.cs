@@ -48,15 +48,17 @@ public class Admin : User
     #region Classes Administration concerns
     public SchoolClass CreateUniqueClass(
         Admin admin,
-        Specialization specialization,
         TeacherAdvisor? teacherAdvisor,
-        int year)
+        Specialization specialization,
+        int year,
+        int seatsNumber)
     {
         var @class = SchoolClass.CreateUnique(
             admin,
             specialization,
             teacherAdvisor,
-            year);
+            year,
+            seatsNumber);
 
         _classes.Add(@class);
         return @class;
@@ -66,37 +68,18 @@ public class Admin : User
         Admin admin,
         TeacherAdvisorId? teacherId,
         Specialization specialization,
-        int year)
+        int year,
+        int seatsNumber)
     {
         var teacher = Teachers.FirstOrDefault(t => t.Id == teacherId);
         var @class = SchoolClass.CreateUnique(
             admin,
             specialization,
             teacher,
-            year);
+            year,
+            seatsNumber);
 
         teacher?.AssignClass(@class);
-        _classes.Add(@class);
-        return @class;
-    }
-
-    public SchoolClass CreateClass(
-        Admin admin,
-        TeacherAdvisorId? teacherId,
-        Specialization specialization,
-        IEnumerable<Student> students,
-        int year)
-    {
-        var teacher = Teachers.FirstOrDefault(t => t.Id == teacherId);
-        var @class = SchoolClass.CreateUnique(
-            admin,
-            specialization,
-            teacher,
-            year);
-
-        foreach (var student in students)
-            @class.AddStudent(student);
-
         _classes.Add(@class);
         return @class;
     }
@@ -108,16 +91,16 @@ public class Admin : User
             return false;
 
         @class.ChangeTeacher(null);
-        while (@class.Students.Any())
-        {
-            /* We remove the last element from the list each time because of the behaviour of lists
-             * when we try to remove an element inside a list, the whole remaining elements got moved
-             * to the index - 1
-             */
-            var student = @class.Students[@class.Students.Count - 1];
-            // student.RemoveClass(@class);
-            @class.RemoveStudent(student);
-        }
+        // while (@class.Students.Any())
+        // {
+        //     /* We remove the last element from the list each time because of the behaviour of lists
+        //      * when we try to remove an element inside a list, the whole remaining elements got moved
+        //      * to the index - 1
+        //      */
+        //     var student = @class.Students[@class.Students.Count - 1];
+        //     // student.RemoveClass(@class);
+        //     @class.RemoveStudent(student);
+        // }
 
         return true;
     }
@@ -149,17 +132,17 @@ public class Admin : User
 
     public bool DismissStudent(StudentId studentId)
     {
-        var student = _students.FirstOrDefault(s => s.Id == studentId);
-        if (student is null)
-            return false;
+        // var student = _students.FirstOrDefault(s => s.Id == studentId);
+        // if (student is null)
+        //     return false;
 
-        var @class = _classes.Where(c => c.Students.Contains(student)).OrderBy(c => c.Year).Last();
-        if (@class is null)
-            return false;
+        // var @class = _classes.Where(c => c.Students.Contains(student)).OrderBy(c => c.Year).Last();
+        // if (@class is null)
+        //     return false;
 
-        @class.RemoveStudent(student);
-        // while(student.Classes.Any())
-        //     student.RemoveClass(student.Classes[student.Classes.Count - 1]);
+        // @class.RemoveStudent(student);
+        // // while(student.Classes.Any())
+        // //     student.RemoveClass(student.Classes[student.Classes.Count - 1]);
 
         return true;
     }

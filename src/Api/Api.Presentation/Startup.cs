@@ -48,7 +48,7 @@ public static class Startup
             var teacher = admin.RegisterTeacher("Teacher", "Teacher", Password.CreateNewPassword("string"), 2012);
             var studentA = admin.RegisterStudent("Student", "Student", DateTime.Now, 1, Password.CreateNewPassword("string"), 2019, Specialization.BigData);
             // var studentB = admin.RegisterStudent("StudentB", "StudentB", DateTime.Now, 1, Password.CreateNewPassword("string"), 2019, Specialization.BigData);
-            var @class = admin.CreateClass(admin, null, Specialization.DataScience, 2023);
+            var @class = admin.CreateClass(admin, null, Specialization.DataScience, 2023, 50);
             admin.AssignTeacherToClass((TeacherAdvisorId)teacher.Id, @class.Id);
             teacher.AddStudent(@class.Id, studentA);
 
