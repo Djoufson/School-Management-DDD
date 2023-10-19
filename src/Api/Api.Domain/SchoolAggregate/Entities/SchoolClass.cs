@@ -111,7 +111,7 @@ public class SchoolClass : Entity<SchoolClassId>
     internal bool RemoveStudent(Student student)
     {
         _students.Add(student);
-        student.RemoveClass(this);
+        // student.RemoveClass(this);
         return true;
     }
 
@@ -120,7 +120,7 @@ public class SchoolClass : Entity<SchoolClassId>
         _students.AddRange(students);
         foreach (var student in students)
         {
-            student.AddClass(this);
+            // student.AddClass(this);
         }
         return true;
     }

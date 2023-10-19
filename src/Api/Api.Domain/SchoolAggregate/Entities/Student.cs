@@ -10,13 +10,13 @@ namespace Api.Domain.SchoolAggregate.Entities;
 public class Student : User
 {
     private readonly List<Notation> _notations = new();
-    private readonly List<SchoolClass> _classes = new();
+    private readonly List<Seat> _seats = new();
     public DateTime DateOfBirth { get; }
     public int Level { get; private set; }
     public Specialization? Specialization { get; private set; }
 
     public IReadOnlyList<Notation> Notations => _notations.AsReadOnly();
-    public IReadOnlyList<SchoolClass> Classes => _classes.AsReadOnly();
+    public IReadOnlyList<Seat> Seats => _seats.AsReadOnly();
 
     private Student(
         StudentId id,
@@ -37,17 +37,17 @@ public class Student : User
     {
     }
 
-    internal bool AddClass(SchoolClass @class)
+    internal bool GiveASeat(Seat seat)
     {
-        if(_classes.Contains(@class))
+        if(seat.Student is null)
             return false;
-        _classes.Add(@class);
+        _seats.Add(seat);
         return true;
     }
 
-    internal bool RemoveClass(SchoolClass @class)
+    internal bool RemoveClass(Seat seat)
     {
-        return _classes.Remove(@class);
+        return _seats.Remove(seat);
     }
 
     internal bool AddNotation(Notation notation)

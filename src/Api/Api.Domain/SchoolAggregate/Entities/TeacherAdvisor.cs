@@ -43,7 +43,7 @@ public class TeacherAdvisor : User
             return null;
 
         @class.AddStudent(student);
-        student.AddClass(@class);
+        // student.AddClass(@class);
         return @class;
     }
 

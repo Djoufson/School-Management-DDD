@@ -115,7 +115,7 @@ public class Admin : User
              * to the index - 1
              */
             var student = @class.Students[@class.Students.Count - 1];
-            student.RemoveClass(@class);
+            // student.RemoveClass(@class);
             @class.RemoveStudent(student);
         }
 
@@ -158,8 +158,8 @@ public class Admin : User
             return false;
 
         @class.RemoveStudent(student);
-        while(student.Classes.Any())
-            student.RemoveClass(student.Classes[student.Classes.Count - 1]);
+        // while(student.Classes.Any())
+        //     student.RemoveClass(student.Classes[student.Classes.Count - 1]);
 
         return true;
     }
